@@ -12,8 +12,8 @@ def bfs(arr, visited, start_row, start_col, clear_flag):
         current_row, current_col = queue.pop(0)
         for d_row, d_col in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
             next_row, next_col = current_row + d_row, current_col + d_col
-            if (0 <= next_row < 5 and 0 <= next_col < 5 and
-                not visited[next_row][next_col] and
+            if (0 <= next_row < 5 and 0 <= next_col < 5 and 
+                not visited[next_row][next_col] and 
                 arr[current_row][current_col] == arr[next_row][next_col]):
                 queue.append((next_row, next_col))
                 visited[next_row][next_col] = True
@@ -29,7 +29,7 @@ def bfs(arr, visited, start_row, start_col, clear_flag):
 
 def count_clear(arr, clear_flag):
     visited = [[False] * 5 for _ in range(5)]
-    return sum(bfs(arr, visited, row, col, clear_flag)
+    return sum(bfs(arr, visited, row, col, clear_flag) 
                for row in range(5) for col in range(5) if not visited[row][col])
 
 def fill_empty(arr, lst):
