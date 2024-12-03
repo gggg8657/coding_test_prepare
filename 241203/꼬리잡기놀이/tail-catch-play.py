@@ -60,8 +60,8 @@ for row in range(n):
             bfs(row,col,team_n)
             team_n+=1
 
-print_world(world,n)
-print(teams)
+# print_world(world,n)
+# print(teams)
 
 ans = 0
 
@@ -91,14 +91,14 @@ for round in range(k):
         ci,cj = n-1-offset, n-1
     else :
         ci,cj = 0, n-1-offset
-    print_world(world, n)
-    print(teams)
+    # print_world(world, n)
+    # print(teams)
     # 3 공에 맞은 사람 점수 추가 및 방향 반전
     for _ in range(n):                              # MAX N 까지 탐색
         if 0<=ci<n and 0<=cj<n and world[ci][cj]>4: # 누가 맞음
             team_n = world[ci][cj]
             # 좌표 index +1 해서, 제곱
-            print(len(teams[team_n]))
+            # print(len(teams[team_n]))
             ans += (teams[team_n].index((ci,cj))+1)**2
             teams[team_n] = teams[team_n][::-1] # 팀 방향 바꾸기
             break
