@@ -1,5 +1,5 @@
 import sys
-from itertools import combinations
+# from itertools import combinations
 import copy
 from collections import deque
 
@@ -41,7 +41,14 @@ def BFS(narr):
             if narr[_][U] == 0: return_val+=1
     return return_val
 
-
+def combination(arr,n):
+    comb=[]
+    for i in range(len(arr)):
+        for j in range(i+1,len(arr)):
+            for k in range(j+1,len(arr)):
+                comb.append((arr[i],arr[j],arr[k]))
+    # print(comb)
+    return comb
 
 input = sys.stdin.readline
 
@@ -66,8 +73,8 @@ for _ in range(n):
             fire_cnt += 1
             fire_coordinates.append([_,j])
         elif arr[_][j] == 0: coordinates.append([_,j])
-
-point_list = list(combinations(coordinates, 3))
+comb = combination(coordinates,3)
+# point_list = list(combinations(coordinates, 3))
 # print(point_list)
 x = n*m - fire_cnt - wall_cnt
 scene_no = int(x*(x-1)*(x-2)/6)
@@ -75,7 +82,7 @@ scene_no = int(x*(x-1)*(x-2)/6)
 ans = 0
 for i in range(scene_no):
     tmp_world= copy.deepcopy(arr)
-    new_points = point_list.pop()
+    new_points = comb.pop()
     tmp_world= build_wall(tmp_world,new_points)
     tmp = BFS(tmp_world)
     # print(f"result is {tmp}")
