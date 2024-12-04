@@ -29,11 +29,12 @@ def synthesis(arr, info):
                 syntar.append(arr[tar])
                 new_atom[0] = arr[i][0] #syn pos
                 new_atom[1] = arr[i][1]
-                for srcs in syntar:
-                    new_atom[2] += srcs[2]  # syn mass
-                    new_atom[3] += srcs[3]  # syn spedd
-                    if srcs[4] % 2 != tmp: new_atom[4] = 1  # syn direction flag if different from before
-                    new_atom[5] += 1
+        for srcs in syntar:
+            new_atom[2] += srcs[2]  # syn mass
+            new_atom[3] += srcs[3]  # syn spedd
+            if srcs[4] % 2 != tmp: new_atom[4] = 1  # syn direction flag if different from before
+            new_atom[5] += 1
+                # syntar.popleft()
         i += 1
         if len(syntar)==1:
             flag+=1
@@ -119,7 +120,7 @@ for _ in range(M):
 # print(info)
 
 for _ in range(K):
-    if M == 1: break
+    if M == 1 or len(info)==0: break
     info = move(info, N)
     # print(info)
     arr = copy.deepcopy(info)
@@ -152,4 +153,9 @@ print(ans)
 4 2 1 1 0
 4 3 3 2 5
 4
+
+5 2 8
+5 3 3 3 5
+3 3 10 8 6
+0
 '''
