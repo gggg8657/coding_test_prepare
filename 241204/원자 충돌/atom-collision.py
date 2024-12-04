@@ -12,10 +12,12 @@
 
 import sys
 
-def synthesis(arr):
+def synthesis(arr, info):
     new_list=[]
+    flag = 1
+    i=0
     while arr:
-        i = 0
+        if len(arr) == flag: break
         syntar = []
         new_atom = [0]*6 # in new atom there is flag in address 4 if flag is 0 상하좌우, else 대각선 in new atom
         x, y = arr[i][0], arr[i][1]  # src x,y
@@ -27,16 +29,22 @@ def synthesis(arr):
                 syntar.append(arr[tar])
                 new_atom[0] = arr[i][0] #syn pos
                 new_atom[1] = arr[i][1]
-        for srcs in syntar:
-            new_atom[2]+=srcs[2] #syn mass
-            new_atom[3]+=srcs[3] #syn spedd
-            if srcs[4]%2 != tmp: new_atom[4] =1 #syn direction flag if different from before
-            new_atom[5] +=1
-        new_list.append(new_atom)
-        for a in syntar:
-            arr.pop(arr.index(a))
-        i+=1
-    return new_list,arr
+                for srcs in syntar:
+                    new_atom[2] += srcs[2]  # syn mass
+                    new_atom[3] += srcs[3]  # syn spedd
+                    if srcs[4] % 2 != tmp: new_atom[4] = 1  # syn direction flag if different from before
+                    new_atom[5] += 1
+        i += 1
+        if len(syntar)==1:
+            flag+=1
+            pass
+        else:
+            new_list.append(new_atom)
+            for a in syntar:
+                arr.pop(arr.index(a))
+                info.pop(info.index(a))
+
+    return new_list
                     #srcs[4]
 
                     #나눠지는 원자 방향 정해줘야겠네
@@ -65,30 +73,29 @@ def divide(newt, arr):
 def move(arr, N):
     for atom in arr:
         offset = atom[3] % N
-        if atom[4]==0:
-            atom[0] -= 1*offset
-        elif atom[4]==1:
-            atom[0]-=1*offset
-            atom[1] += 1*offset
-        elif atom[4]==2:
-            atom[1] += 1*offset
-        elif atom[4]==3:
-            atom[0] += 1*offset
-            atom[1] += 1*offset
-        elif atom[4]==4:
-            atom[0] += 1*offset
-        elif atom[4]==5:
-            atom[0] += 1*offset
-            atom[1] -= 1*offset
-        elif atom[4]==6:
-            atom[1] -= 1*offset
-        elif atom[4]==7:
-            atom[0] -= 1*offset
-            atom[1] -= 1*offset
-        if N<=atom[0] : atom[0]-=N
-        elif atom[0]<0 : atom[0]+=N
-        if N<atom[1] : atom[1]-=N
-        elif atom[1]<0 : atom[1]+=N
+        if atom[4] == 0:
+            atom[0] -= offset
+        elif atom[4] == 1:
+            atom[0] -= offset
+            atom[1] += offset
+        elif atom[4] == 2:
+            atom[1] += offset
+        elif atom[4] == 3:
+            atom[0] += offset
+            atom[1] += offset
+        elif atom[4] == 4:
+            atom[0] += offset
+        elif atom[4] == 5:
+            atom[0] += offset
+            atom[1] -= offset
+        elif atom[4] == 6:
+            atom[1] -= offset
+        elif atom[4] == 7:
+            atom[0] -= offset
+            atom[1] -= offset
+        # 좌표를 그리드 내로 조정
+        atom[0] %= N
+        atom[1] %= N
     return arr
 
 input = sys.stdin.readline
@@ -101,6 +108,8 @@ arr = [[0]*N for _ in range(N)]
 info = []
 for _ in range(M):
     info.append(list(map(int, input().split())))
+    info[_][0] -= 1
+    info[_][1] -= 1
     # arr[info[_][0]][info[_][1]]
 
     # x , y : pos, m : 질량, s : 속력, d : 방향  0부터 7까지 순서대로 ↑, ↗, →, ↘, ↓, ↙, ←, ↖
@@ -112,7 +121,11 @@ for _ in range(K):
     if M == 1: break
     info = move(info, N)
     # print(info)
-    new_atom, arr = synthesis(info)
+    arr = copy.deepcopy(info)
+    # for i in range(len(info)):
+    #     for j in range(i+1, len(info)):
+    #         if info[i][0]==
+    new_atom = synthesis(arr, info)
     # print(info)
     info = divide(new_atom, info)
     # print(info)
