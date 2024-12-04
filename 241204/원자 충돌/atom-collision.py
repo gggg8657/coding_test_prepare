@@ -43,7 +43,7 @@ def synthesis(arr, info):
         else:
             new_list.append(new_atom)
             for a in syntar:
-                arr.pop(arr.index(a))
+                #arr.pop(arr.index(a))
                 info.pop(info.index(a))
 
     return new_list
@@ -73,31 +73,39 @@ def divide(newt, arr):
     return arr
 
 def move(arr, N):
+    # for atom in arr:
+    #     offset = atom[3] % N
+    #     if atom[4] == 0:
+    #         atom[0] -= offset
+    #     elif atom[4] == 1:
+    #         atom[0] -= offset
+    #         atom[1] += offset
+    #     elif atom[4] == 2:
+    #         atom[1] += offset
+    #     elif atom[4] == 3:
+    #         atom[0] += offset
+    #         atom[1] += offset
+    #     elif atom[4] == 4:
+    #         atom[0] += offset
+    #     elif atom[4] == 5:
+    #         atom[0] += offset
+    #         atom[1] -= offset
+    #     elif atom[4] == 6:
+    #         atom[1] -= offset
+    #     elif atom[4] == 7:
+    #         atom[0] -= offset
+    #         atom[1] -= offset
+    #     # 좌표를 그리드 내로 조정
+    #     atom[0] %= N
+    #     atom[1] %= N
+    direction_vectors = [
+        (-1, 0), (-1, 1), (0, 1), (1, 1),
+        (1, 0), (1, -1), (0, -1), (-1, -1)
+    ]
     for atom in arr:
-        offset = atom[3] % N
-        if atom[4] == 0:
-            atom[0] -= offset
-        elif atom[4] == 1:
-            atom[0] -= offset
-            atom[1] += offset
-        elif atom[4] == 2:
-            atom[1] += offset
-        elif atom[4] == 3:
-            atom[0] += offset
-            atom[1] += offset
-        elif atom[4] == 4:
-            atom[0] += offset
-        elif atom[4] == 5:
-            atom[0] += offset
-            atom[1] -= offset
-        elif atom[4] == 6:
-            atom[1] -= offset
-        elif atom[4] == 7:
-            atom[0] -= offset
-            atom[1] -= offset
-        # 좌표를 그리드 내로 조정
-        atom[0] %= N
-        atom[1] %= N
+        dx, dy = direction_vectors[atom[4]]
+        atom[0] = (atom[0] + dx * atom[3]) % N
+        atom[1] = (atom[1] + dy * atom[3]) % N
     return arr
 
 input = sys.stdin.readline
@@ -123,7 +131,8 @@ for _ in range(K):
     if M == 1 or len(info)==0: break
     info = move(info, N)
     # print(info)
-    arr = copy.deepcopy(info)
+    arr = info
+    #arr = copy.deepcopy(info)
     # for i in range(len(info)):
     #     for j in range(i+1, len(info)):
     #         if info[i][0]==
