@@ -45,7 +45,7 @@ def divide(newt, arr):
     while newt:
         new = newt[0]
         tmp =[0]*5
-        size = new[2]//5
+        size = new[2] // 5
         speed = new[3] // new[5]
         if size<=0:
             newt.pop(newt.index(new))
@@ -62,32 +62,33 @@ def divide(newt, arr):
             newt.pop(newt.index(new))
     return arr
 
-def move(arr):
+def move(arr, N):
     for atom in arr:
+        offset = atom[3] % N
         if atom[4]==0:
-            atom[0] -= 1*atom[3]
+            atom[0] -= 1*offset
         elif atom[4]==1:
-            atom[0]-=1*atom[3]
-            atom[1] += 1*atom[3]
+            atom[0]-=1*offset
+            atom[1] += 1*offset
         elif atom[4]==2:
-            atom[1] += 1*atom[3]
+            atom[1] += 1*offset
         elif atom[4]==3:
-            atom[0] += 1*atom[3]
-            atom[1] += 1*atom[3]
+            atom[0] += 1*offset
+            atom[1] += 1*offset
         elif atom[4]==4:
-            atom[0] += 1*atom[3]
+            atom[0] += 1*offset
         elif atom[4]==5:
-            atom[0] += 1*atom[3]
-            atom[1] -= 1*atom[3]
+            atom[0] += 1*offset
+            atom[1] -= 1*offset
         elif atom[4]==6:
-            atom[1] -= 1*atom[3]
+            atom[1] -= 1*offset
         elif atom[4]==7:
-            atom[0] -= 1*atom[3]
-            atom[1] -= 1*atom[3]
-        if N<=atom[0] or atom[0]<0:
-            atom[0] -=N
-        if N<=atom[0] or atom[0]<0:
-            atom[1] -=N
+            atom[0] -= 1*offset
+            atom[1] -= 1*offset
+        if N<=atom[0] : atom[0]-=N
+        elif atom[0]<0 : atom[0]+=N
+        if N<atom[1] : atom[1]-=N
+        elif atom[1]<0 : atom[1]+=N
     return arr
 
 input = sys.stdin.readline
@@ -109,7 +110,7 @@ for _ in range(M):
 
 for _ in range(K):
     if M == 1: break
-    info = move(info)
+    info = move(info, N)
     # print(info)
     new_atom, arr = synthesis(info)
     # print(info)
@@ -122,3 +123,19 @@ for _ in info:
     ans += _[2]
 print(ans)
 
+'''
+9 5 10
+3 7 7 4 7
+7 6 5 5 5
+9 2 6 5 5
+4 6 4 1 6
+6 9 6 3 7
+26
+
+4 4 1
+1 2 2 2 4
+2 4 5 3 6
+4 2 1 1 0
+4 3 3 2 5
+4
+'''
