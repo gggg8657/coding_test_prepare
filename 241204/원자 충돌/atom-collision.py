@@ -39,6 +39,7 @@ def synthesis(arr, info):
             flag+=1
             pass
         else:
+            i-=1
             new_list.append(new_atom)
             for a in syntar:
                 arr.pop(arr.index(a))
