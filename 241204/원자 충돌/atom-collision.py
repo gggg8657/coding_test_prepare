@@ -35,12 +35,11 @@ def synthesis(arr, info):
             if srcs[4] % 2 != tmp: new_atom[4] = 1  # syn direction flag if different from before
             new_atom[5] += 1
                 # syntar.popleft()
-        i += 1
         if len(syntar)==1:
+            i += 1
             flag+=1
             pass
         else:
-            i-=1
             new_list.append(new_atom)
             for a in syntar:
                 arr.pop(arr.index(a))
