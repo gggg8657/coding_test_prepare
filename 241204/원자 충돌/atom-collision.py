@@ -14,13 +14,15 @@ import sys
 
 def synthesis(arr, info):
     new_list=[]
-    flag = 1
+    flag = len(arr)
     i=0
     while arr:
-        if len(arr) == flag: break
+        if i == flag: break
         syntar = []
         new_atom = [0]*6 # in new atom there is flag in address 4 if flag is 0 상하좌우, else 대각선 in new atom
-        x, y = arr[i][0], arr[i][1]  # src x,y
+        try: x, y = arr[i][0], arr[i][1]  # src x,y
+        except:
+            break
         tmp = arr[i][4]%2
         syntar.append(arr[i])
         for tar in range(i+1, len(arr)):
@@ -37,7 +39,6 @@ def synthesis(arr, info):
                 # syntar.popleft()
         if len(syntar)==1:
             i += 1
-            flag+=1
             pass
         else:
             new_list.append(new_atom)
