@@ -108,6 +108,7 @@ for _ in range(M):
 # print(info)
 
 for _ in range(K):
+    if M == 1: break
     info = move(info)
     # print(info)
     new_atom, arr = synthesis(info)
