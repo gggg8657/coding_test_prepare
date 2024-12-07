@@ -33,4 +33,4 @@ for _ in range(n):
         continue
     else: result.append(arr[_])
 
-print(len(result)-1)
+print(len(result))
