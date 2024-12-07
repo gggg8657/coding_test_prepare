@@ -19,13 +19,13 @@ arr = [[' ' for _ in range(20)]for _ in range(n)]
 order = [list(map(int, input().split())) for _ in range(m)]
 for _ in range(m):
     if order[_][0] ==1:
-        arr[order[_][1]][order[_][2]] = 1
+        arr[order[_][1]-1][order[_][2]] = 1
     elif order[_][0] ==2:
-        arr[order[_][1]][order[_][2]] = 0
+        arr[order[_][1]-1][order[_][2]] = 0
     elif order[_][0]==3:
-        move(arr[order[_][1]],1)
+        move(arr[order[_][1]-1],1)
     elif order[_][0]==4:
-        move(arr[order[_][1]],-1)
+        move(arr[order[_][1]-1],-1)
 result = []
 result.append(arr[0])
 for _ in range(n):
