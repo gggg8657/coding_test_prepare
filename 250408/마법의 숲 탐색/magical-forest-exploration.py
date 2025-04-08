@@ -30,6 +30,7 @@ def check_left(r_i, c_i):
     else : left = 0
     return left # 1 왼쪽 아래 가능, 0 왼쪽 불가능, 2 왼쪽 아래가 불가능
 
+
 def check_right(r_i, c_i):
     right = 0
     if c_i < c-2 and c_i + 2 < c and c_i + 2 < c and r_i + 2 < r:
@@ -81,6 +82,7 @@ def bfs(y, x):
 
 queue=deque()
 r, c, k = map(int, input().split())
+r +=3
 world = [[0 for _ in range(c)]for _ in range(r)]
 
 queue = deque()
@@ -126,7 +128,7 @@ while queue:
             d_i = (d_i + 1)%4; 
             #print("rotate to right")
             continue
-        elif r_i == 0 and left != 1 and right != 1 and down != 1:
+        elif r_i <= 2 and left != 1 and right != 1 and down != 1:
             #reset world
             #print("nothing to move clear world")
             world = [[0 for _ in range(c)]for _ in range(r)]
@@ -142,7 +144,7 @@ while queue:
             direction(r_i,c_i,d_i)
             # 정령 탈출일기 작성
             # bfs를 통해 정령이 최대로 내려갈 수 있는 행를 계산하여 누적합니다
-            answer += bfs(r_i, c_i) +1
+            answer += bfs(r_i, c_i) -3 + 1
             for _ in range(4):
                 nx, ny = r_i + dx[_], c_i + dy[_]
                 if nx < 0 or ny < 0 or nx >= r or ny >= c: continue
