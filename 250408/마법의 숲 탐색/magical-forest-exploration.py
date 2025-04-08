@@ -128,7 +128,7 @@ while queue:
             d_i = (d_i + 1)%4; 
             #print("rotate to right")
             continue
-        elif r_i <= 2 and left != 1 and right != 1 and down != 1:
+        elif r_i <=3 and left != 1 and right != 1 and down != 1:
             #reset world
             #print("nothing to move clear world")
             world = [[0 for _ in range(c)]for _ in range(r)]
