@@ -42,16 +42,17 @@ def check_right(r_i, c_i):
     else : right = 0
     return right # 1 오른쪽 아래 가능, 0 오른쪽 불가능, 2 오른쪽 아래가 불가능
 
-
+DOOR = 9999
 def direction(r_i,c_i,d_i):
     if d_i == 0 :
-        world[r_i-1][c_i] = 2
+        world[r_i-1][c_i] = DOOR
     elif d_i == 1:
-        world[r_i][c_i+1] = 2
+        world[r_i][c_i+1] = DOOR
     elif d_i == 2:
-        world[r_i+1][c_i] = 2
+        world[r_i+1][c_i] = DOOR
     else:
-        world[r_i][c_i-1] = 2
+        world[r_i][c_i-1] = DOOR
+    isDoor[r_i][c_i] = True
 
 
 def inRange(y, x):
@@ -64,7 +65,7 @@ def bfs(y, x):
     visit[y][x] = True
     while q:
         cur_y, cur_x = q.popleft()
-        if world[cur_y][cur_x] == 2: #<- 문에 있음
+        if world[cur_y][cur_x] == DOOR: #<- 문에 있음
             for _ in range(4):
                 ny, nx = cur_y + dy[_], cur_x + dx[_]
                 if inRange(ny, nx) and not visit[ny][nx] and world[ny][nx] == 1:
@@ -74,7 +75,7 @@ def bfs(y, x):
         else : 
             for k in range(4):
                 ny, nx = cur_y + dy[k], cur_x + dx[k]
-                if inRange(ny, nx) and not visit[ny][nx] and (world[ny][nx] == world[cur_y][cur_x] or world[ny][nx]==2):
+                if inRange(ny, nx) and not visit[ny][nx] and (world[ny][nx] == world[cur_y][cur_x] or world[ny][nx]==DOOR or isDoor[ny][nx]):
                     q.append((ny, nx))
                     visit[ny][nx] = True
                     result = max(result, ny)
@@ -84,6 +85,7 @@ queue=deque()
 r, c, k = map(int, input().split())
 r +=3
 world = [[0 for _ in range(c)]for _ in range(r)]
+isDoor = [[False for _ in range(c)] for _ in range(r)]
 
 queue = deque()
 for _ in range(k):
@@ -100,9 +102,9 @@ tmp_q = deque()
 
 
 answer = 0
-iter = -1
+iter = 2000
 while queue:
-    iter -=1
+    iter +=1
     r_i, c_i, d_i = queue.popleft()
     while True:
         down = check_down(r_i, c_i)
