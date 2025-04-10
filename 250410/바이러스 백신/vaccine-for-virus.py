@@ -50,8 +50,8 @@ while combq:
         print(-1) 
         exit()
     else: 
-        result.append(step)
-        step =0
+        result.append(step-1)
+        step =1
         world = copy.deepcopy(newworld)
 
     
