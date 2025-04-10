@@ -59,8 +59,9 @@ while combq:
         world = copy.deepcopy(newworld)
 
 
-    
-print(min((result)))
+if len(result) ==0:
+    print(-1)    
+else : print(min(result))
 '''
 3 1
 2 1 1
