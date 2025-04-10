@@ -51,7 +51,7 @@ while combq:
             ans =-1
             APPENDRESULT = False
             break
-    if len(combq)==0 and len(posq) == 0 and APPENDRESULT == False: 
+    if len(combq)==0 and len(posq) == 0 and APPENDRESULT == False and len(result)==0: 
         result.append(ans)
     elif APPENDRESULT: 
         result.append(step-1)
@@ -61,3 +61,9 @@ while combq:
 
     
 print(min((result)))
+'''
+3 1
+2 1 1
+0 1 2
+1 1 1
+'''
