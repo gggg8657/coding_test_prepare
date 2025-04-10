@@ -1,97 +1,3 @@
-# 시발코드
-# if M == 1:
-#     for i in range(len(hosq)):
-#         combq.append(hosq[i])
-# elif M == 2:
-#     for i in range(len(hosq)):
-#         for j in range(i, len(hosq)):
-#             if (hosq[i], hosq[j]) not in combq:
-#                 combq.append([hosq[i], hosq[j]])
-#             else: continue
-# elif M == 3:
-#     for k in range(len(hosq)):
-#         for i in range(k+1, len(hosq)):
-#             for j in range(i+1, len(hosq)):
-#                 if (hosq[k], hosq[i], hosq[j]) not in combq:
-#                     combq.append([hosq[k], hosq[i], hosq[j]])
-#                 else: continue
-# elif M == 4:
-#     for l in range(len(hosq)):
-#         for k in range(l, len(hosq)):
-#             for i in range(k, len(hosq)):
-#                 for j in range(i, len(hosq)):
-#                     if (hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                         combq.append([hosq[l], hosq[k], hosq[i], hosq[j]])
-#                     else: continue
-# elif M == 5:
-#     for m in range(len(hosq)):
-#         for l in range(m, len(hosq)):
-#             for k in range(l, len(hosq)):
-#                 for i in range(k, len(hosq)):
-#                     for j in range(i, len(hosq)):
-#                         if (hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                             combq.append([hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]])
-#                         else: continue
-# elif M == 6:
-#     for n in range(len(hosq)):
-#         for m in range(n, len(hosq)):
-#             for l in range(m, len(hosq)):
-#                 for k in range(l, len(hosq)):
-#                     for i in range(k, len(hosq)):
-#                         for j in range(i, len(hosq)):
-#                             if (hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                                 combq.append([hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]])
-#                             else: continue
-# elif M == 7:
-#     for o in range(len(hosq)):
-#         for n in range(o, len(hosq)):
-#             for m in range(n, len(hosq)):
-#                 for l in range(m, len(hosq)):
-#                     for k in range(l, len(hosq)):
-#                         for i in range(k, len(hosq)):
-#                             for j in range(i, len(hosq)):
-#                                 if (hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                                     combq.append([hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]])
-#                                 else: continue
-# elif M == 8:
-#     for p in range(len(hosq)):
-#         for o in range(p, len(hosq)):
-#             for n in range(o, len(hosq)):
-#                 for m in range(n, len(hosq)):
-#                     for l in range(m, len(hosq)):
-#                         for k in range(l, len(hosq)):
-#                             for i in range(k, len(hosq)):
-#                                 for j in range(i, len(hosq)):
-#                                     if (hosq[p], hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                                         combq.append([hosq[p], hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]])
-#                                     else: continue
-# elif M == 9:
-#     for q in range(len(hosq)):
-#         for p in range(q, len(hosq)):
-#             for o in range(p, len(hosq)):
-#                 for n in range(o, len(hosq)):
-#                     for m in range(n, len(hosq)):
-#                         for l in range(m, len(hosq)):
-#                             for k in range(l, len(hosq)):
-#                                 for i in range(k, len(hosq)):
-#                                     for j in range(i, len(hosq)):
-#                                         if (hosq[q], hosq[p], hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                                             combq.append([hosq[q], hosq[p], hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]])
-#                                         else: continue
-# elif M == 10:
-#     for r in range(len(hosq)):
-#         for q in range(r, len(hosq)):
-#             for p in range(q, len(hosq)):
-#                 for o in range(p, len(hosq)):
-#                     for n in range(o, len(hosq)):
-#                         for m in range(n, len(hosq)):
-#                             for l in range(m, len(hosq)):
-#                                 for k in range(l, len(hosq)):
-#                                     for i in range(k, len(hosq)):
-#                                         for j in range(i, len(hosq)):
-#                                             if (hosq[r], hosq[q], hosq[p], hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]) not in combq:
-#                                                 combq.append([hosq[r], hosq[q], hosq[p], hosq[o], hosq[n], hosq[m], hosq[l], hosq[k], hosq[i], hosq[j]])
-#                                             else: continue
 
 from collections import deque
 import copy
@@ -122,6 +28,7 @@ step = 1
 result=[]
 
 ans = 0
+APPENDRESULT = True
 while combq:
     posq = deque(combq.popleft())
     while any(0 in row for row in world):
@@ -140,14 +47,17 @@ while combq:
         for item in tmpq: posq.append(item)
         step+=1
 
-        if len(posq) <=0 and any(0 in row for row in world): ans =-1; break
-    if ans == -1 and len(posq)==0 and len(result)==0: 
-        print(-1) 
-        exit()
-    else: 
+        if len(posq) <=0 and any(0 in row for row in world): 
+            ans =-1
+            APPENDRESULT = False
+            break
+    if len(combq)==0 and len(posq) == 0 and APPENDRESULT == False: 
+        result.append(ans)
+    elif APPENDRESULT: 
         result.append(step-1)
         step =1
         world = copy.deepcopy(newworld)
+
 
     
 print(min((result)))
