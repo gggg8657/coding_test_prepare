@@ -86,11 +86,8 @@ for _ in range(k):
     tmpq = deque() #이동된 원자 위치 저장할 q 초기화
     while q:
         ca = q.popleft()
-        nr, nc = ca.r + ca.s*dr[ca.d], ca.c + ca.s*dc[ca.d]
-        if nr<0 : nr+=n
-        elif nr>=n : nr-=n
-        if nc<0 : nc+=n
-        elif nc>=n : nc-=n
+        nr = (ca.r + ca.s * dr[ca.d]) % n
+        nc = (ca.c + ca.s * dc[ca.d]) % n
         ca.r = nr
         ca.c = nc
         tmpq.append(ca) #이동 후 원자의 위치 저장
