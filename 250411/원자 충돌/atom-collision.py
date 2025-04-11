@@ -9,22 +9,37 @@ class atom:
 import copy
 import sys
 input = sys.stdin.readline
+# def check(cq):
+#     clpsed = deque()
+#     tmp = deque()
+#     for i in range(len(cq)):
+#         src = cq[i]
+#         clpsed = deque()
+#         for j in range(len(cq)):
+#             tar = cq[j]
+#             if src.r == tar.r and src.c == tar.c: # 겹쳤으면, 
+#                 clpsed.append(tar)
+#         if clpsed not in tmp and len(clpsed)>=2: 
+#             tmp.append(clpsed)
+#     if len(tmp)<=0: 
+#         return _, False
+#     else : 
+#         return tmp, True
+
+from collections import defaultdict
+
 def check(cq):
-    clpsed = deque()
+    pos_dict = defaultdict(deque)
+
+    for atom in cq:
+        pos_dict[(atom.r, atom.c)].append(atom)
+
     tmp = deque()
-    for i in range(len(cq)):
-        src = cq[i]
-        clpsed = deque()
-        for j in range(len(cq)):
-            tar = cq[j]
-            if src.r == tar.r and src.c == tar.c: # 겹쳤으면, 
-                clpsed.append(tar)
-        if clpsed not in tmp and len(clpsed)>=2: 
-            tmp.append(clpsed)
-    if len(tmp)<=0: 
-        return _, False
-    else : 
-        return tmp, True
+    for atoms in pos_dict.values():
+        if len(atoms) >= 2:
+            tmp.append(atoms)
+
+    return (tmp, True) if tmp else (_, False)
 
 def Divide(tq,mem):
     # del_list = []
