@@ -64,7 +64,7 @@ def Divide(tq,mem):
 
         # new r, c
         a.r = b.r = c.r = d.r = atom_n.r
-        a.c = b.c = c.c = d.c = atom_n.r
+        a.c = b.c = c.c = d.c = atom_n.c
         q.append(a)
         q.append(b)
         q.append(c)
