@@ -10,8 +10,6 @@ import copy
 def check(cq):
     clpsed = deque()
     tmp = deque()
-
-    # tmp = copy.deepcopy(cq)
     for i in range(len(cq)):
         src = cq[i]
         clpsed = deque()
@@ -36,12 +34,9 @@ def Divide(tq,mem):
         while tmp:
             atom_n = tmp.popleft()
             tq.remove(atom_n)
-            # for i in range(len(tq)):
-            #     if atom_n == tq[i] and i not in del_list: 
-            #         del_list.append[i]
             total_m += atom_n.m
             
-            direction.append(atom_n.d %2)
+            direction.append(abs(atom_n.d %2))
             total_s += atom_n.s
 
         #summation done
@@ -52,7 +47,7 @@ def Divide(tq,mem):
                         # 원래 있던 q 에서도 날려줘야 되는데 어쩌노 이미 popleft 하면서 뺴고, 분리 하고 다시 넣으므로 무관
         else : 
             a, b, c ,d = atom(), atom(), atom(), atom()
-            a.m, b.m, c.m, d.m = new_m, new_m, new_m, new_m
+            a.m = b.m = c.m = d.m = new_m
 
         # new direction
         if min(direction) != max(direction): # 배열 안에 0 과 1 이 모두 있음
@@ -61,8 +56,11 @@ def Divide(tq,mem):
 
         # new speed
         new_s = total_s//len(direction) # 합쳐진 원자의 개수
-        a.s, b.s, c.s, d.s = new_s, new_s, new_s, new_s
+        a.s = b.s = c.s = d.s = new_s
 
+        # new r, c
+        a.r = b.r = c.r = d.r = atom_n.r
+        a.c = b.c = c.c = d.c = atom_n.r
         q.append(a)
         q.append(b)
         q.append(c)
@@ -90,9 +88,9 @@ for _ in range(k):
         ca = q.popleft()
         nr, nc = ca.r + ca.s*dr[ca.d], ca.c + ca.s*dc[ca.d]
         if nr<0 : nr+=n
-        if nr>=n : nr-=n
+        elif nr>=n : nr-=n
         if nc<0 : nc+=n
-        if nc>=n : nc-=n
+        elif nc>=n : nc-=n
         ca.r = nr
         ca.c = nc
         tmpq.append(ca) #이동 후 원자의 위치 저장
@@ -107,7 +105,6 @@ for _ in range(k):
 
     for item in tmpq: q.append(item) #이동된 원자의 위치 q에 추가
     # tmpq 에 사라진 원소도 남아있음...
-    # 
 
 
 
