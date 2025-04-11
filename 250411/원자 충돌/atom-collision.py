@@ -7,6 +7,7 @@ class atom:
         self.d = 0
 
 import copy
+
 def check(cq):
     clpsed = deque()
     tmp = deque()
@@ -19,9 +20,10 @@ def check(cq):
                 clpsed.append(tar)
         if clpsed not in tmp and len(clpsed)>=2: 
             tmp.append(clpsed)
-        else : continue
-    if len(tmp)<=0:  return _, False
-    else : return tmp, True
+    if len(tmp)<=0: 
+        return _, False
+    else : 
+        return tmp, True
 
 def Divide(tq,mem):
     # del_list = []
@@ -52,15 +54,16 @@ def Divide(tq,mem):
         # new direction
         if min(direction) != max(direction): # 배열 안에 0 과 1 이 모두 있음
             a.d, b.d, c.d, d.d = 1, 3, 5, 7
-        else : a.d, b.d, c.d, d.d = 0, 2, 4, 6 #한가지 종류로 됨
+        else : 
+            a.d, b.d, c.d, d.d = 0, 2, 4, 6 #한가지 종류로 됨
 
         # new speed
-        new_s = total_s//len(direction) # 합쳐진 원자의 개수
+        new_s = total_s // len(direction) # 합쳐진 원자의 개수
         a.s = b.s = c.s = d.s = new_s
 
         # new r, c
         a.r = b.r = c.r = d.r = atom_n.r
-        a.c = b.c = c.c = d.c = atom_n.r
+        a.c = b.c = c.c = d.c = atom_n.c
         q.append(a)
         q.append(b)
         q.append(c)
