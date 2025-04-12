@@ -94,7 +94,7 @@ def shot_count(glist, iter):
         row_pos = iter%n
         for col_pos in range(n):
             #gun shoot 
-            if world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 :
+            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 ):
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
@@ -113,9 +113,9 @@ def shot_count(glist, iter):
                             return glist, result
     elif iter//n == 1: #아래쪽에서 쏨
         col_pos = iter%n
-        for row_pos in range(n, -1 ,0):
+        for row_pos in range(n, 0 ,-1):
             #gun shoot 
-            if world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 :
+            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 ):
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
@@ -134,9 +134,9 @@ def shot_count(glist, iter):
                             return glist, result
     elif iter//n == 2: #오른쪽에서 쏨
         row_pos -= iter%n
-        for col_pos in range(n, -1,0):
+        for col_pos in range(n, 0,-1):
             #gun shoot 
-            if world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 :
+            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0) :
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
@@ -157,7 +157,7 @@ def shot_count(glist, iter):
         col_pos -= iter%n
         for row_pos in range(n):
             #gun shoot 
-            if world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 :
+            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 ):
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
