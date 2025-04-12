@@ -36,7 +36,7 @@ def move(glist, world):
                 if len(team)==0: 
                     for _ in range(4):
                         nr, nc = man.r + dr[_], man.c+dc[_]
-                        if 0<=nr<n and 0<=nc<n and world[nr][nc] == 4:
+                        if 0<=nr<n and 0<=nc<n and (world[nr][nc] == 4 or world[nr][nc] == 3):
                             new_world[man.r][man.c] = 4
                             man.r, man.c = nr,nc
                             break
@@ -51,7 +51,7 @@ def move(glist, world):
                 if len(team)==0: 
                     for _ in range(4):
                         nr, nc = man.r + dr[_], man.c+dc[_]
-                        if 0<=nr<n and 0<=nc<n and world[nr][nc] == 4:
+                        if 0<=nr<n and 0<=nc<n and (world[nr][nc] == 4 or world[nr][nc] == 3):
                             new_world[man.r][man.c] = 4
                             man.r, man.c = nr,nc
                             break
@@ -200,7 +200,7 @@ adv_q = deque()
 
 teams_list = []
 for row in range(n):
-    if team_cnt>=2: break
+    if team_cnt>=k: break
     for col in range(n):
         saved_rc = []
         team_que = deque()
@@ -221,27 +221,29 @@ for row in range(n):
                 for dir in range(4):
                     nr, nc = cr + dr[dir], cc + dc[dir]
                     if 0<=nr<n and 0<=nc<n and world[nr][nc] == 2 and [nr,nc] not in saved_rc: #몸통 찾고
-                        adv_q.append([nr,nc])
                         tmp = human()
                         tmp.r = nr
                         tmp.c = nc
                         tmp.isHead = False
                         tmp.isTail = False
                         tmp.no = cnt
-                        saved_rc.append([nr,nc])
-                        team_que.append(tmp)
-                    elif 0<=nr<n and 0<=nc<n and world[nr][nc] == 3  and [nr,nc] not in saved_rc: #꼬리 찾음
                         adv_q.append([nr,nc])
-                        tmp = human()
-                        tmp.r = nr
-                        tmp.c = nc
-                        tmp.isHead = False
-                        tmp.isTail = True
-                        tmp.no = cnt
                         saved_rc.append([nr,nc])
                         team_que.append(tmp)
-                        team_cnt+=1
+                        last_r, last_c = nr,nc
                         break
+            for dir in range(4):
+                nr, nc = last_r + dr[dir], last_c + dc[dir]
+                if 0 <= nr < n and 0 <= nc < n and world[nr][nc] == 3 and [nr, nc] not in saved_rc:
+                    tmp = human()
+                    tmp.r = nr
+                    tmp.c = nc
+                    tmp.isHead = False
+                    tmp.isTail = True
+                    tmp.no = cnt
+                    team_que.append(tmp)
+                    saved_rc.append([nr, nc])
+                    break  # 꼬리 한 개만 붙이면 됨            
 
             teams_list.append(team_que)
 
