@@ -13,7 +13,7 @@ for row in range(n):
     world.append(list(map(int, input().split())))
 
 gl = []
-map =[[False for _ in range(n)] for _ in range(n)]
+mymap =[[False for _ in range(n)] for _ in range(n)]
 
 dr,dc = [-1,0,1,0],[0,1,0,-1]
 class human:
@@ -84,6 +84,18 @@ def move(glist, world):
 # 총 쏘는 방향 서 남 동 북
 # iter//n == 0 1 2 3
 
+# 같은 테케에서 k 횟수가 10으로 증가하면 망함. 
+
+'''
+7 2 10
+3 2 1 0 0 0 0
+4 0 4 0 2 1 4
+4 4 4 0 2 0 4
+0 0 0 0 3 0 4
+0 0 4 4 4 0 4
+0 0 4 0 0 0 4
+0 0 4 4 4 4 4
+'''
 
 def shot_count(glist, iter):
     result = 0
@@ -91,19 +103,18 @@ def shot_count(glist, iter):
     if iter >= 4 * n : iter-=4 * n
     row_pos, col_pos = 0,0
     if iter//n == 0: #왼쪽에서 쏨
-        row_pos = iter%n
+        row_pos = iter%n-1
         for col_pos in range(n):
             #gun shoot 
-            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 ):
+            if 0<=row_pos<n and 0<=col_pos<n:
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
                         if mate.r == row_pos and mate.c == col_pos:
-                            result += mate.no*mate.no
-                            len_of_team = len(team)
+                            result = mate.no * mate.no
                             for i in range(len(team)):
-                                tm= team[i]
-                                tm.no = len_of_team - tm.no
+                                tm = team[i]
+                                tm.no = len(team) - tm.no +1
                                 if tm.isHead == True: 
                                     tm.isHead = False 
                                     tm.isTail = True
@@ -112,19 +123,18 @@ def shot_count(glist, iter):
                                     tm.isHead = True
                             return glist, result
     elif iter//n == 1: #아래쪽에서 쏨
-        col_pos = iter%n
-        for row_pos in range(n, 0 ,-1):
+        col_pos = iter%n-1
+        for row_pos in range(n-1, -1 ,-1):
             #gun shoot 
-            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 ):
+            if 0<=row_pos<n and 0<=col_pos<n :
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
                         if mate.r == row_pos and mate.c == col_pos:
-                            result += mate.no*mate.no
-                            len_of_team = len(team)
+                            result = mate.no * mate.no
                             for i in range(len(team)):
                                 tm= team[i]
-                                tm.no = len_of_team - tm.no
+                                tm.no = len(team) - tm.no +1
                                 if tm.isHead == True: 
                                     tm.isHead = False 
                                     tm.isTail = True
@@ -133,19 +143,18 @@ def shot_count(glist, iter):
                                     tm.isHead = True
                             return glist, result
     elif iter//n == 2: #오른쪽에서 쏨
-        row_pos -= iter%n
-        for col_pos in range(n, 0,-1):
+        row_pos = n-1- iter%n
+        for col_pos in range(n-1, -1,-1):
             #gun shoot 
-            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0) :
+            if 0<=row_pos<n and 0<=col_pos<n :
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
                         if mate.r == row_pos and mate.c == col_pos:
-                            result += mate.no*mate.no
-                            len_of_team = len(team)
+                            result = mate.no*mate.no
                             for i in range(len(team)):
                                 tm= team[i]
-                                tm.no = len_of_team - tm.no
+                                tm.no = len(team) - tm.no +1
                                 if tm.isHead == True: 
                                     tm.isHead = False 
                                     tm.isTail = True
@@ -154,19 +163,18 @@ def shot_count(glist, iter):
                                     tm.isHead = True
                             return glist, result
     elif iter//n == 3: #위에서 쏨
-        col_pos -= iter%n
+        col_pos = n-1- iter%n
         for row_pos in range(n):
             #gun shoot 
-            if 0<=row_pos<n and 0<=col_pos<n and (world[row_pos][col_pos] != 4 or world[row_pos][col_pos] != 0 ):
+            if 0<=row_pos<n and 0<=col_pos<n:
                 for _ in range(len(glist)):
                     team = glist[_]
                     for mate in team:
                         if mate.r == row_pos and mate.c == col_pos:
-                            result += mate.no*mate.no
-                            len_of_team = len(team)
+                            result = mate.no*mate.no
                             for i in range(len(team)):
                                 tm= team[i]
-                                tm.no = len_of_team - tm.no
+                                tm.no = len(team) - tm.no +1
                                 if tm.isHead == True: 
                                     tm.isHead = False 
                                     tm.isTail = True
@@ -177,7 +185,7 @@ def shot_count(glist, iter):
 
     #if shot glist flip head tail
     #
-    return glist, iter
+    return glist, result
 
 
 
@@ -239,8 +247,10 @@ for row in range(n):
 
 
 for _ in range(k):
+    # print(f"[{_}] : ")
     teams_list, world = move(teams_list, world) #move function return group list and also mark update function make new world with road array and mark 1 2 3 on the road
-    teams_list, tmp = shot_count(teams_list, _) # shot function return group list and result
+    teams_list, tmp = shot_count(teams_list, _+1) # shot function return group list and result
+    # print(tmp)
     ans += tmp
 print(ans)
 
